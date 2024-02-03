@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 # from dotenv import load_dotenv
 from os import environ as env
-
+import os
 # load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'pd',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +73,14 @@ TEMPLATES = [
         },
     },
 ]
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 WSGI_APPLICATION = 'pdapi.wsgi.application'
 
@@ -119,9 +130,27 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+STORAGES = {
+    "default": {
+        "BACKEND": "pd.custom_azure.AzureMediaStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "pd.custom_azure.AzureStaticStorage",
+    }
+}
+# STATIC_ROOT =os.path.join(BASE_DIR, 'static')
+# MEDIA_LOCATION = "media"
+
+# AZURE_ACCOUNT_NAME = "pdretinalstorage"
+# AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+# STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+# MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
+
+STATIC_URL = "/static/"

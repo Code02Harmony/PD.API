@@ -1,0 +1,21 @@
+from django.db import models
+from django.utils import timezone
+
+
+class Prediction(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.PositiveSmallIntegerField()
+    country = models.CharField(max_length=100)
+    date = models.DateTimeField(default=timezone.now)
+    prediction = models.BooleanField(default=False)
+    retinalScan = models.ImageField(upload_to='testimages')
+
+
+
+class Feedback(models.Model):
+    predction = models.ForeignKey(Prediction,on_delete=models.CASCADE)
+    comments=models.CharField(default="",max_length=1000)
+    isPredictionCorrect=models.BooleanField(default=True)
+
+    
+
