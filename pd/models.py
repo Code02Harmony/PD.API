@@ -5,11 +5,11 @@ from django.utils import timezone
 class Prediction(models.Model):
     name = models.CharField(max_length=100)
     age = models.PositiveSmallIntegerField()
+    sex = models.CharField(max_length=10,default="")
     country = models.CharField(max_length=100)
     date = models.DateTimeField(default=timezone.now)
     prediction = models.BooleanField(default=False)
     retinalScan = models.ImageField(upload_to='testimages')
-
 
 
 class Feedback(models.Model):

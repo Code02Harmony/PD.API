@@ -75,35 +75,38 @@ TEMPLATES = [
     },
 ]
 
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
-}
+# REST_FRAMEWORK = {
+#     # Use Django's standard `django.contrib.auth` permissions,
+#     # or allow read-only access for unauthenticated users.
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#     ]
+# }
 
 WSGI_APPLICATION = 'pdapi.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+import dj_database_url
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-    ,
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+    # ,
     #  'default': {
     #     'ENGINE': 'django.db.backends.postgresql',
     #     'NAME': 'codeharmonyapi-database',
     #     'USER': 'scbmlghegb',
     #     'PASSWORD': '3P330X12E6Y108MR$',
-    #     'HOST': 'codeharmonyapi-server',
-    #     'PORT': '',
-    # }
-}
+    #     'HOST': 'codeharmonyapi-server.postgres.database.azure.com',
+    #     'PORT': '5432',
+    # },
+     'default':  dj_database_url.config(
+        default="postgres://scbmlghegb:3P330X12E6Y108MR$@codeharmonyapi-server.postgres.database.azure.com:5432/codeharmonyapi-database",
+        conn_max_age=600,)
+    }
 
 
 
@@ -156,12 +159,4 @@ STORAGES = {
         "BACKEND": "pd.custom_azure.AzureStaticStorage",
     }
 }
-# STATIC_ROOT =os.path.join(BASE_DIR, 'static')
-# MEDIA_LOCATION = "media"
-
-# AZURE_ACCOUNT_NAME = "pdretinalstorage"
-# AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
-# STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
-# MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
-
 STATIC_URL = "/static/"

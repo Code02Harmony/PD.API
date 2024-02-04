@@ -4,4 +4,4 @@ from .models import Prediction
 class PredictionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Prediction
-        fields =["name",'age',"country","date","retinalScan"]
+        fields =["name",'age',"sex","country","retinalScan"]
