@@ -29,7 +29,8 @@ SECRET_KEY = 'django-insecure-0f)k3xu2%9gt&qi6m+qpm0b+$hvz@1%gewf=7d07dri!ty4c8#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["https://codeharmonyapi.azurewebsites.net", '127.0.0.1' ]
+CSRF_TRUSTED_ORIGINS = ["https://codeharmonyapi.azurewebsites.net", 'https://127.0.0.1' ]
 
 
 # Application definition
@@ -93,7 +94,17 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+    ,
+    #  'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'codeharmonyapi-database',
+    #     'USER': 'scbmlghegb',
+    #     'PASSWORD': '3P330X12E6Y108MR$',
+    #     'HOST': 'codeharmonyapi-server',
+    #     'PORT': '',
+    # }
 }
+
 
 
 # Password validation
