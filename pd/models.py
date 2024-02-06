@@ -9,7 +9,7 @@ class Prediction(models.Model):
     country = models.CharField(max_length=100)
     date = models.DateTimeField(default=timezone.now)
     prediction = models.BooleanField(default=False)
-    retinalScan = models.ImageField(upload_to='testimages')
+    retinalScan = models.ImageField(upload_to='testimages',default=None)
 
 
 class Feedback(models.Model):

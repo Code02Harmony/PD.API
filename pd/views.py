@@ -18,7 +18,22 @@ class PredictionAPIView(APIView):
     def post(self, request, format=None):
         serializer = PredictionSerializer(data=request.data)
         if serializer.is_valid():
+            
             serializer.save()
+
+            return Response({
+                    "success": False,
+                    "prediction":False,
+                    "chances":0
+                }, status=status.HTTP_201_CREATED)
+        
+
+
+
+
+
+
+
             output = predictPd(serializer.data)
 
             if not output:
@@ -34,5 +49,8 @@ class PredictionAPIView(APIView):
                 "chances": chances,
                 "success": True
             }
+            
+        
             return Response(responseData, status=status.HTTP_201_CREATED)
+        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
