@@ -19,20 +19,26 @@ class PredictionAPIView(APIView):
         serializer = PredictionSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            output = predictPd(serializer.data)
+            data = serializer.data
+            img = data["retinalScan"]
+            output = predictPd(data)
 
+
+            print(serializer.data)
             if not output:
                 return Response({
                     "success": False,
                     "prediction":False,
-                    "chances":0
+                    "chances":0,
+                    "segmentedImage":img
                 }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
             prediction, chances = output
             responseData = {
                 "prediction": prediction,
                 "chances": chances,
-                "success": True
+                "success": True,
+                "segmentedImage":img
             }
             return Response(responseData, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
