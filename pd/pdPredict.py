@@ -25,19 +25,13 @@ if pillow_image:
 
 
 
-def predictPd(data):
-    imgUrl = data["retinalScan"]
-    name = data["name"]
-    age = data["age"]
-    sex = data["sex"]
-    country = data["country"]
-
+def predictPd(imgUrl,name,age,sex,country):
     img = url_to_pillow_object(imgUrl)
 
     if not img:
         return None
     
-    print(img)
+    # print(img)
 
     # Predict Using ML model
 

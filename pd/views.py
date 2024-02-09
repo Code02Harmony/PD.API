@@ -4,6 +4,7 @@ from rest_framework import status
 from .models import Prediction
 from .serializers import PredictionSerializer
 from .pdPredict import predictPd
+from .recommendation import getRecommendation
 
 
 class PredictionAPIView(APIView):
@@ -20,25 +21,30 @@ class PredictionAPIView(APIView):
         if serializer.is_valid():
             serializer.save()
             data = serializer.data
-            img = data["retinalScan"]
-            output = predictPd(data)
 
+            imgUrl = data["retinalScan"]
+            name = data["name"]
+            age = data["age"]
+            sex = data["sex"]
+            country = data["country"]
 
-            print(serializer.data)
+            output = predictPd(imgUrl, name, age, country, sex)
             if not output:
                 return Response({
                     "success": False,
-                    "prediction":False,
-                    "chances":0,
-                    "segmentedImage":img
+                    "prediction": False,
+                    "chances": 0,
+                    "segmentedImage": imgUrl
                 }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+            recomendations = getRecommendation(name,age,country)
             prediction, chances = output
             responseData = {
                 "prediction": prediction,
                 "chances": chances,
                 "success": True,
-                "segmentedImage":img
+                "segmentedImage": imgUrl,
+                "recommendation":recomendations
             }
             return Response(responseData, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
