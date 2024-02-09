@@ -1,6 +1,0 @@
-Django
-django-filter
-djangorestframework
-pillow
-python-dotenv
-uvicorn

@@ -10,6 +10,7 @@ class Prediction(models.Model):
     date = models.DateTimeField(default=timezone.now)
     prediction = models.BooleanField(default=False)
     retinalScan = models.ImageField(upload_to='testimages')
+    segmentedImage = models.ImageField(upload_to='segmented',default=None,null=True,blank=True)
 
 
 class Feedback(models.Model):

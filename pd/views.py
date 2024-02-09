@@ -5,6 +5,8 @@ from .models import Prediction
 from .serializers import PredictionSerializer
 from .pdPredict import predictPd
 from .recommendation import getRecommendation
+import matplotlib.pyplot as plt
+import os
 
 
 class PredictionAPIView(APIView):
@@ -19,7 +21,8 @@ class PredictionAPIView(APIView):
     def post(self, request, format=None):
         serializer = PredictionSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            predObj = serializer.save()
+
             data = serializer.data
 
             imgUrl = data["retinalScan"]
@@ -37,14 +40,17 @@ class PredictionAPIView(APIView):
                     "segmentedImage": imgUrl
                 }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-            recomendations = getRecommendation(name,age,country)
-            prediction, chances = output
+            recomendations = getRecommendation(name, age, country)
+            prediction, chances, image = output
+            predObj.segmentedImage.save(image, open(image, 'rb'), save=True)
+            predObj.save()
+
             responseData = {
                 "prediction": prediction,
                 "chances": chances,
                 "success": True,
-                "segmentedImage": imgUrl,
-                "recommendation":recomendations
+                "segmentedImage":  f"https://pdoctretinalstorage.blob.core.windows.net/media/{str(predObj.segmentedImage)}",
+                "recommendation": recomendations
             }
             return Response(responseData, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
