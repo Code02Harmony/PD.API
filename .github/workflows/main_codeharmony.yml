@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://codeharmonyregistry.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_dc838a09a1f449f3afe09cbdd668492c }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_c5a3af38199a4b6ab8c9241be0a36e82 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_b77c7ae430964839bc52c25ca3c23133 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_69cbd63054c2421388d9eac6a038e209 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: codeharmonyregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_dc838a09a1f449f3afe09cbdd668492c }}/pdapi:${{ github.sha }}
+        tags: codeharmonyregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_b77c7ae430964839bc52c25ca3c23133 }}/pdapi:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'codeharmony'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_23eb012862e34a5c8028660976dc0b73 }}
-        images: 'codeharmonyregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_dc838a09a1f449f3afe09cbdd668492c }}/pdapi:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_847029768d3c4cb0b9a3db010c823539 }}
+        images: 'codeharmonyregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_b77c7ae430964839bc52c25ca3c23133 }}/pdapi:${{ github.sha }}'
