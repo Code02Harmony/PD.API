@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-0f)k3xu2%9gt&qi6m+qpm0b+$hvz@1%gewf=7d07dri!ty4c8#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["codeharmonyapi.azurewebsites.net", '127.0.0.1' ]
+ALLOWED_HOSTS = ["codeharmonyapi.azurewebsites.net", '127.0.0.1',"codeharmony.azurewebsites.net" ]
 CSRF_TRUSTED_ORIGINS = ["https://codeharmonyapi.azurewebsites.net", 'https://127.0.0.1' ]
 
 
