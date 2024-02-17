@@ -1,0 +1,7 @@
+*.pyc
+.venv
+.venv2
+.env
+p311
+training
+p311-2
