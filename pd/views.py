@@ -39,9 +39,10 @@ class PredictionAPIView(APIView):
                     "chances": 0,
                     "segmentedImage": imgUrl
                 }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-            recomendations = getRecommendation(name, age, country)
             prediction, chances, image = output
+
+            recomendations = getRecommendation(name, age, country,prediction)
+            
             predObj.segmentedImage.save(image, open(image, 'rb'), save=True)
             predObj.save()
 
