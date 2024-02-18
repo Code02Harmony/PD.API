@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Prediction
-from .serializers import PredictionSerializer
+from .serializers import PredictionSerializerPost,PredictionSerializerGet
 from .pdPredict import predictPd
 from .recommendation import getRecommendation
 import matplotlib.pyplot as plt
@@ -11,15 +11,15 @@ import os
 
 class PredictionAPIView(APIView):
     queryset = Prediction.objects.all()
-    serializer_class = PredictionSerializer
+    serializer_class = PredictionSerializerPost
 
     def get(self, request, format=None):
         predictions = Prediction.objects.all()
-        serializer = PredictionSerializer(predictions, many=True)
+        serializer = PredictionSerializerGet(predictions, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = PredictionSerializer(data=request.data)
+        serializer = PredictionSerializerPost(data=request.data)
         if serializer.is_valid():
             predObj = serializer.save()
 
@@ -44,6 +44,7 @@ class PredictionAPIView(APIView):
             recomendations = getRecommendation(name, age, country,prediction)
             
             predObj.segmentedImage.save(image, open(image, 'rb'), save=True)
+            predObj.prediction = prediction
             predObj.save()
 
             responseData = {
