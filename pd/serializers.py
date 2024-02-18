@@ -10,4 +10,4 @@ class PredictionSerializerPost(serializers.ModelSerializer):
 class PredictionSerializerGet(serializers.ModelSerializer):
     class Meta:
         model = Prediction
-        fields =["name",'age',"sex","country","retinalScan","segmentedImage","prediction"]
+        fields =["name",'age',"sex","country","retinalScan","segmentedImage","prediction","recommendation","chances"]

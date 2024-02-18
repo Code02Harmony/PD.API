@@ -45,6 +45,8 @@ class PredictionAPIView(APIView):
             
             predObj.segmentedImage.save(image, open(image, 'rb'), save=True)
             predObj.prediction = prediction
+            predObj.recommendation = recomendations
+            predObj.chances = chances
             predObj.save()
 
             responseData = {
